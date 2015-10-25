@@ -8,6 +8,21 @@ The 3 entities are
 * Project
 * Activity
 
+## Build
+
+To build the application
+`./gradlew build`
+
+Build the application for eclipse
+`./gradlew eclipse`
+
+To debug the application
+`./gradlew serve -Dorg.gradle.debug=true`
+Then connect eclipse debugger as a remote application
+
+
+
+## Service
 The application is configured to run on port 8088
 
 When running, the oData service root is available at 
