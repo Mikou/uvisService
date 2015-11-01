@@ -27,13 +27,14 @@ public class JettyEmbeddedRunner {
 			context.addServlet(DemoServlet.class, "/service.svc/*");
 			context.addServlet(IntroServlet.class, "/");
 			
-			String origin = "http://localhost:8082";
+			String origin = "http://uvisjs.dk" ;
 			
 			FilterHolder cors = new FilterHolder(new CrossOriginFilter());//context.addFilter(CrossOriginFilter.class,"/*",EnumSet.of(DispatcherType.REQUEST));
 			cors.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, origin);
 			cors.setInitParameter(CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
 			cors.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,POST,HEAD,OPTIONS");
-			cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "X-Requested-With,Content-Type,Accept,Origin");
+			//cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "X-Requested-With,Content-Type,Accept,Origin");
+			cors.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "X-Requested-With,Content-Type,Accept,OData-MaxVersion");
 			cors.setInitParameter(CrossOriginFilter.ACCESS_CONTROL_ALLOW_CREDENTIALS_HEADER, "true");
 
 			context.addFilter(cors, "/*" ,EnumSet.of(DispatcherType.REQUEST));
