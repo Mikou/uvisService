@@ -9,7 +9,6 @@
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
-apply plugin: 'war'
 apply plugin: 'eclipse'
 
 version = '1.0'
@@ -18,47 +17,6 @@ targetCompatibility = 1.8
 
 repositories {
     jcenter()
-}
-
-
-task fatJar(type: Jar) {
-	manifest {
-		attributes ( 
-			'Implementation-Title': 'Gradle Jar File Example',  
-        	'Implementation-Version': version,
-        	'Main-Class': 'dk.uvis.Application'
-        )
-	}
-	
-	baseName = project.name + '-all'
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-}
-
-jar {
-	archiveName = "uvisService.jar"
-	
-
-	
-	manifest {
-		attributes (
-			'Main-Class': 'dk.uvis.Application'
-			//'Class-Path': configurations.compile.collect { it.getName() }.join(' ')
-		)
-	}
-	
-	exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
-}
-
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java'
-        }
-        resources {
-            srcDir 'src/main/resources'
-        }
-    }
 }
 
 // In this section you declare the dependencies for your production and test code
@@ -85,10 +43,20 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-task(serve, dependsOn:'classes', type: JavaExec) {
-	main = 'dk.uvis.Application'
-	classpath = sourceSets.main.runtimeClasspath
-	standardInput = System.in
+jar {
+    from(configurations.compile.collect {it.isDirectory() ? it : zipTree(it) }) {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+
+    manifest {
+        attributes 'Implementation-Title': 'uvis',
+        'Implementation-Version': version,
+        'Built-By': System.getProperty('user.name'),
+        'Built-Date': new Date(),
+        'Built-JDK': System.getProperty('java.version'),
+        'Main-Class': 'dk.uvis.Application'
+    }
 }
 
-defaultTasks 'serve'

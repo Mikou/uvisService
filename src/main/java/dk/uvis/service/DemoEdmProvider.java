@@ -146,18 +146,18 @@ public class DemoEdmProvider extends CsdlAbstractEdmProvider {
 			List<CsdlNavigationProperty> navPropList = null;
 			// navigation property: many-to-one, null not allowed (product must have a category)
 			navProp = new CsdlNavigationProperty()
-					.setName("Project")
-					.setType(ET_PROJECT_FQN)
+					.setName("Person")
+					.setType(ET_PERSON_FQN)
 					.setNullable(false)
-					.setPartner("Activity");
+					.setPartner("Activities");
 			navPropList = new ArrayList<CsdlNavigationProperty>();
 			navPropList.add(navProp);
 			// navigation property: many-to-one, null not allowed (product must have a category)
 			navProp = new CsdlNavigationProperty()
-					.setName("Person")
-					.setType(ET_PERSON_FQN)
+					.setName("Project")
+					.setType(ET_PROJECT_FQN)
 					.setNullable(false)
-					.setPartner("Activity");
+					.setPartner("Activities");
 			//navPropList = new ArrayList<CsdlNavigationProperty>();
 			navPropList.add(navProp);
 			entityType.setNavigationProperties(navPropList);
@@ -166,34 +166,6 @@ public class DemoEdmProvider extends CsdlAbstractEdmProvider {
 
 			//entityType.setNavigationProperties(navPropList);
 		
-		} else if (entityTypeName.equals(ET_PERSON_FQN)){
-			// create EntityType properties
-			CsdlProperty id = new CsdlProperty().setName("ID")
-					.setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
-			CsdlProperty name = new CsdlProperty().setName("Name")
-					.setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-			CsdlProperty age = new CsdlProperty().setName("Age")
-					.setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-
-			// create CsdlPropertyRef for Key element
-			CsdlPropertyRef propertyRef = new CsdlPropertyRef();
-			propertyRef.setName("ID");
-			// navigation property: one-to-many
-			CsdlNavigationProperty navProp = new CsdlNavigationProperty()
-					.setName("Activities")
-					.setType(ET_ACTIVITY_FQN)
-					.setCollection(true)
-					.setPartner("Person");
-			List<CsdlNavigationProperty> navPropList = new ArrayList<CsdlNavigationProperty>();
-			navPropList.add(navProp);
-
-			// configure EntityType
-			entityType = new CsdlEntityType();
-			entityType.setName(ET_PERSON_NAME);
-			entityType.setProperties(Arrays.asList(id, name, age));
-			entityType.setKey(Collections.singletonList(propertyRef));
-			entityType.setNavigationProperties(navPropList);
-			
 		} else if (entityTypeName.equals(ET_PROJECT_FQN)){
 			// create EntityType properties
 			CsdlProperty id = new CsdlProperty().setName("ID")
@@ -220,6 +192,35 @@ public class DemoEdmProvider extends CsdlAbstractEdmProvider {
 			entityType = new CsdlEntityType();
 			entityType.setName(ET_PROJECT_NAME);
 			entityType.setProperties(Arrays.asList(id, name, description));
+			entityType.setKey(Collections.singletonList(propertyRef));
+			entityType.setNavigationProperties(navPropList);
+		}
+		
+		else if (entityTypeName.equals(ET_PERSON_FQN)){
+			// create EntityType properties
+			CsdlProperty id = new CsdlProperty().setName("ID")
+					.setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
+			CsdlProperty name = new CsdlProperty().setName("Name")
+					.setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+			CsdlProperty age = new CsdlProperty().setName("Age")
+					.setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
+
+			// create CsdlPropertyRef for Key element
+			CsdlPropertyRef propertyRef = new CsdlPropertyRef();
+			propertyRef.setName("ID");
+			// navigation property: one-to-many
+			CsdlNavigationProperty navProp = new CsdlNavigationProperty()
+					.setName("Activities")
+					.setType(ET_ACTIVITY_FQN)
+					.setCollection(true)
+					.setPartner("Person");
+			List<CsdlNavigationProperty> navPropList = new ArrayList<CsdlNavigationProperty>();
+			navPropList.add(navProp);
+
+			// configure EntityType
+			entityType = new CsdlEntityType();
+			entityType.setName(ET_PERSON_NAME);
+			entityType.setProperties(Arrays.asList(id, name, age));
 			entityType.setKey(Collections.singletonList(propertyRef));
 			entityType.setNavigationProperties(navPropList);
 			

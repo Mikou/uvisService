@@ -9,7 +9,5 @@ public class Application {
 
 		System.out.println("### STARTING WEB SERVER ###");
 		new JettyEmbeddedRunner().startServer();
-
 	}
-
 }

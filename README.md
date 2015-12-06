@@ -16,8 +16,11 @@ To build the application
 Build the application for eclipse
 `./gradlew eclipse`
 
-To debug the application
-`./gradlew serve -Dorg.gradle.debug=true`
+Build jar
+./gradlew jar
+
+Debug
+java -Xdebug -Xrunjdwp:transport=dt_socket,address=5005,server=y -cp build/libs/UvisService-1.0.jar dk.uvis.Application
 Then connect eclipse debugger as a remote application
 
 
